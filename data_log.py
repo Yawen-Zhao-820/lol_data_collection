@@ -1,7 +1,12 @@
+from cProfile import run
 import pyautogui, sys
 import time
-import mouse
-import keyboard
+# import mouse
+# import keyboard
+# import win32api
+import threading
+from pynput import mouse, keyboard
+# import asyncio
 
 # while True:
 #     mouse_events = []
@@ -60,17 +65,75 @@ import keyboard
 
 # take screenshot'
 
-i = 0
-print(type(pyautogui.screenshot()))
+# i = 0
 
-while True:
-    time.sleep(1)
-    filename = str(i) + '.png'
-    src1 = pyautogui.screenshot()
-    src1.save(filename)
-    i += 1
+
+# while True:
+#     time.sleep(1)
+#     timestamp = time.time() 
+#     filename = str(timestamp) + ".png"
+#     src1 = pyautogui.screenshot()
+#     src1.save(filename)
+#     i += 1
 
 # get mouse state
+# while True:
+#     # time.sleep(0.1)
+#     # print("1234")
+#     if keyboard.read_key('c'):
+#         print("1 is pressed")
 
+
+
+
+# start_key = win32api.GetKeyState()
 
 # get keyboard state
+
+
+
+
+# 事件驱动
+# 是否自动施法? 自动施法就会有左键点击的操作
+# 不使用A键和S键盘，只用规定的键
+
+# Get screenshot while mouse clicked
+# Record Timestamp, mouse_locaton, mouse_isclicked_left, mouse_isclicked_right
+# Save screenshot with name as timestamp.png 
+
+
+
+# Get screenshot while keyboard pressed
+# Record Timestamp, Q, W, E, R
+# Save screenshot with name as timestamp.png
+
+
+VALID_INPUTS = ['q', 'w', 'e', 'r']
+
+def on_press(key):
+    if key == keyboard.Key.esc:
+        return False
+    try:
+        k = key.char
+    except:
+        k = key.name
+    if k in VALID_INPUTS:
+        print(k + ' key is pressed at ' + str(time.time()) + '.')
+
+def on_click(x, y, button, pressed):
+    if button == mouse.Button.left:
+        print('{0} at {1}'.format(
+            'Left Pressed' if pressed else 'Released',
+            (x, y)))
+    if button == mouse.Button.right:
+        print('{0} at {1}'.format(
+            'Right Pressed' if pressed else 'Released',
+            (x, y)))
+
+with (
+    keyboard.Listener(on_press=on_press) as keyboard_listener, 
+    mouse.Listener(on_click=on_click) as mouse_listener
+    ):
+    keyboard_listener.join()
+    mouse_listener.join()
+
