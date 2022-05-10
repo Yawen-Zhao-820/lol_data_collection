@@ -63,18 +63,18 @@ from pynput import mouse, keyboard
 
     
 
-# take screenshot'
+#take screenshot
 
-# i = 0
+i = 0
 
 
-# while True:
-#     time.sleep(1)
-#     timestamp = time.time() 
-#     filename = str(timestamp) + ".png"
-#     src1 = pyautogui.screenshot()
-#     src1.save(filename)
-#     i += 1
+while True:
+    time.sleep(1)
+    timestamp = time.time() 
+    filename = str(timestamp) + ".png"
+    src1 = pyautogui.screenshot(region=(768, 336, 1024, 768))
+    src1.save(filename)
+    i += 1
 
 # get mouse state
 # while True:
@@ -94,46 +94,61 @@ from pynput import mouse, keyboard
 
 
 # 事件驱动
-# 是否自动施法? 自动施法就会有左键点击的操作
+# 是否自动施法? 非自动施法就会有左键点击的操作
 # 不使用A键和S键盘，只用规定的键
 
 # Get screenshot while mouse clicked
 # Record Timestamp, mouse_locaton, mouse_isclicked_left, mouse_isclicked_right
 # Save screenshot with name as timestamp.png 
 
-
-
 # Get screenshot while keyboard pressed
 # Record Timestamp, Q, W, E, R
 # Save screenshot with name as timestamp.png
 
 
-VALID_INPUTS = ['q', 'w', 'e', 'r']
+# VALID_KEYBOARD_INPUTS = ['q', 'w', 'e', 'r']
+# VALID_MOUSE_INPUTS = ['LD', 'LU', 'RD', 'RU']
 
-def on_press(key):
-    if key == keyboard.Key.esc:
-        return False
-    try:
-        k = key.char
-    except:
-        k = key.name
-    if k in VALID_INPUTS:
-        print(k + ' key is pressed at ' + str(time.time()) + '.')
+# keyboard_input_sequence = []
+# mouse_input_sequence = []
 
-def on_click(x, y, button, pressed):
-    if button == mouse.Button.left:
-        print('{0} at {1}'.format(
-            'Left Pressed' if pressed else 'Released',
-            (x, y)))
-    if button == mouse.Button.right:
-        print('{0} at {1}'.format(
-            'Right Pressed' if pressed else 'Released',
-            (x, y)))
+# def on_press(key):
+#     if key == keyboard.Key.esc:
+#         return False
+#     try:
+#         k = key.char
+#     except:
+#         k = key.name
+#     if k in VALID_KEYBOARD_INPUTS:
+#         keyboard_input_sequence.append(k)
+#         print(k + ' key is pressed at ' + str(time.time()) + '.')
 
-with (
-    keyboard.Listener(on_press=on_press) as keyboard_listener, 
-    mouse.Listener(on_click=on_click) as mouse_listener
-    ):
-    keyboard_listener.join()
-    mouse_listener.join()
+# def on_click(x, y, button, pressed):
+#     if button == mouse.Button.left:
+#         if pressed:
+#             m = 'LD'
+#         else:
+#             m = 'LU'
+#         mouse_input_sequence.append(m)
+
+#         print('{0} at {1}'.format(
+#             'Left Pressed' if pressed else 'Left Released',
+#             (x, y)))
+#     if button == mouse.Button.right:
+#         if pressed:
+#             m = 'RD'
+#         else:
+#             m = 'RU'
+#         mouse_input_sequence.append(m)
+
+#         print('{0} at {1}'.format(
+#             'Right Pressed' if pressed else 'Right Released',
+#             (x, y)))
+
+# with (
+#     keyboard.Listener(on_press=on_press) as keyboard_listener, 
+#     mouse.Listener(on_click=on_click) as mouse_listener
+#     ):
+#     keyboard_listener.join()
+#     mouse_listener.join()
 
